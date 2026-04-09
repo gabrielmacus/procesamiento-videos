@@ -3,6 +3,8 @@ import path from "node:path";
 
 const extractionFoldersMap: Record<string, string> = {
     "119_Asc": "e-Curuzu-LBA-119__ascendente",
+    "119_Asc__PRUEBA": "e-Curuzu-LBA-119__ascendente",
+
     "119_Desc": "e-Curuzu-LBA-119__descendente",
     "Derqui_ASC": "e-Derqui-LBA-1__ascendente",
     "Derqui_DESC": "e-Derqui-LBA-1__descendente",
@@ -26,22 +28,12 @@ async function moveVideoToExtractionFolder(video: string) {
     if (!extractionFolder) {
         throw new Error(`No se encontro una carpeta de extraccion para el dispositivo ${device}`);
     }
+
     const newPath = path.join(MAIN_VITE_NV_PATH, extractionFolder, path.basename(video));
-    console.log("A", newPath);
-    //await fs.mkdir(path.dirname(newPath), { recursive: true });
-    //await fs.rename(video, newPath);
-    //return newPath;
+    await fs.mkdir(path.dirname(newPath), { recursive: true });
+    await fs.rename(video, newPath);
+    return newPath;
 
-
-    return "";
-    /*
-    const videoName = path.basename(video);
-    const videoDir = path.dirname(video);
-    const extractionDir = path.join(videoDir, 'captures');
-    const newVideoPath = path.join(extractionDir, videoName);
-    await fs.mkdir(extractionDir, { recursive: true });
-    await fs.rename(video, newVideoPath);
-    return newVideoPath;*/
 }
 
 async function restartNvProcess(nv: string) {
