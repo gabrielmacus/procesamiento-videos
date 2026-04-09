@@ -23,12 +23,13 @@ const extractionFoldersMap: Record<string, string> = {
 };
 
 async function moveVideoToExtractionFolder(video: string, nv: string) {
+    console.log("Moviendo video para procesar: ", video, nv);
     const device = path.basename(path.dirname(path.dirname(video)));
     const extractionFolder = extractionFoldersMap[device];
     if (!extractionFolder) {
         throw new Error(`No se encontro una carpeta de extraccion para el dispositivo ${device}`);
     }
-    const newPath = path.join(MAIN_VITE_NV_PATH, extractionFolder, nv, path.basename(video));
+    const newPath = path.join(MAIN_VITE_NV_PATH, nv, extractionFolder, path.basename(video));
     await fs.mkdir(path.dirname(newPath), { recursive: true });
     await fs.rename(video, newPath);
     return newPath;
@@ -40,7 +41,6 @@ async function restartNvProcess(nv: string) {
 }
 
 export default async function extractCaptures(video: string, nv: string) {
-    console.log("Iniciando extraccion de capturas para el video: ", video);
     moveVideoToExtractionFolder(video, nv);
     console.log("Reiniciando proceso de NV: ", nv);
     await restartNvProcess(nv);
