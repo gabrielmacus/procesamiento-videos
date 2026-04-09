@@ -8,8 +8,8 @@ export default defineConfig(({ mode }) => {
             MAIN_VITE_DEVICE_VIDEOS_PATH: JSON.stringify(env.MAIN_VITE_DEVICE_VIDEOS_PATH),
             MAIN_VITE_BACKUP_PATH: JSON.stringify(env.MAIN_VITE_BACKUP_PATH),
             MAIN_VITE_NV_PATH: JSON.stringify(env.MAIN_VITE_NV_PATH),
-            NV_USER: JSON.stringify(env.NV_USER),
-            NV_PASSWORD: JSON.stringify(env.NV_PASSWORD),
+            MAIN_VITE_NV_USER: JSON.stringify(env.MAIN_VITE_NV_USER),
+            MAIN_VITE_NV_PASSWORD: JSON.stringify(env.MAIN_VITE_NV_PASSWORD),
         },
     };
 });

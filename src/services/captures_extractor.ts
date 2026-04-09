@@ -48,8 +48,8 @@ async function moveVideoToExtractionFolder(video: string, nv: string) {
 function restartNvProcess(nv: string) {
     //Ejecuta el comando sshpass -p B460mS5h2. ssh -t neuralvision@192.168.1.102 "echo 'pass.' | sudo -S docker restart neuralvision" pero lee la pass desde el .env
     const host = nvIpMap[nv];
-    const pass = NV_PASSWORD;
-    const user = NV_USER;
+    const pass = MAIN_VITE_NV_PASSWORD;
+    const user = MAIN_VITE_NV_USER;
 
     if (!pass || !user || !host) {
         throw new Error(`No se encontro una pass, usuario o host para el dispositivo ${nv}`);
