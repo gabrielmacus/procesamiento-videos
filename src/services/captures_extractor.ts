@@ -57,7 +57,6 @@ function restartNvProcess(nv: string) {
 
     const command = `sshpass -p ${pass} ssh -t ${user}@${host} "echo '${pass}' | sudo -S docker restart neuralvision"`;
     exec(command);
-    //sshpass -p B460mS5h2. ssh -t neuralvision@192.168.1.102 "echo 'B460mS5h2.' | sudo -S docker restart neuralvision"
 }
 
 export default async function extractCaptures(video: string, nv: string) {
