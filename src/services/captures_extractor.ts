@@ -1,5 +1,14 @@
+import { exec } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
+
+const nvIpMap: Record<string, string> = {
+    "NV01": "192.168.1.101",
+    "NV02": "192.168.1.102",
+    "NV03": "192.168.1.103",
+    "NV04": "192.168.1.104"
+
+}
 
 const extractionFoldersMap: Record<string, string> = {
     "119_Asc": "e-Curuzu-LBA-119__ascendente",
@@ -36,8 +45,19 @@ async function moveVideoToExtractionFolder(video: string, nv: string) {
 
 }
 
-async function restartNvProcess(nv: string) {
+function restartNvProcess(nv: string) {
+    //Ejecuta el comando sshpass -p B460mS5h2. ssh -t neuralvision@192.168.1.102 "echo 'pass.' | sudo -S docker restart neuralvision" pero lee la pass desde el .env
+    const host = nvIpMap[nv];
+    const pass = NV_PASSWORD;
+    const user = NV_USER;
 
+    if (!pass || !user || !host) {
+        throw new Error(`No se encontro una pass, usuario o host para el dispositivo ${nv}`);
+    }
+
+    const command = `sshpass -p ${pass} ssh -t ${user}@${host} "echo '${pass}' | sudo -S docker restart neuralvision"`;
+    exec(command);
+    //sshpass -p B460mS5h2. ssh -t neuralvision@192.168.1.102 "echo 'B460mS5h2.' | sudo -S docker restart neuralvision"
 }
 
 export default async function extractCaptures(video: string, nv: string) {
